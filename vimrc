@@ -39,6 +39,8 @@ filetype plugin indent on     " required!
 colorscheme zellner
 "endif
 
+command! W w
+
 if has("syntax")
     syntax on
 endif
@@ -81,8 +83,15 @@ set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
 set undofile
+set undodir=~/.tmp
 set backupdir=~/.tmp
 set directory=~/.tmp
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
 
 set showmatch		" Show matching brackets.
 set ignorecase		" Do case insensitive matching
@@ -124,6 +133,9 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
+" Keep search matches in the middle of the window.
+nnoremap n nzzzv
+nnoremap N Nzzzv
 
 "no need for F1 help
 inoremap <F1> <ESC>
@@ -162,6 +174,10 @@ nnoremap <silent> <leader>sv :so ~/.vim/vimrc<CR>
 
 nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 
+" Space to toggle folds.
+nnoremap <Space> zA
+vnoremap <Space> zA
+"
 "number of lines visible before scrolling
 set scrolloff=8
 set sidescrolloff=8
