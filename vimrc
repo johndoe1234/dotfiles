@@ -1,16 +1,30 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 
-let os = substitute(system('uname'), "\n", "", "")
+"os detection to enable correct mappings and plugins
+let osLinux = has("unix")
+let linuxName=1
+let osWindows = has("win32")
+let windowsName=1
+
+
+if osLinux == linuxName
+    set rtp+=~/.vim/bundle/vundle/
+endif
+
+if osWindows == windowsName
+    set rtp+=$VIM/bundle/vundle/
+    au GUIEnter * simalt ~x "x on an English Windows version. n on a French one
+endif
+
+call vundle#rc()
 
 " let Vundle manage Vundle
 " required! 
 Bundle 'gmarik/vundle'
 
-" My Bundles here:
+"common plugins
 Bundle 'tpope/vim-unimpaired'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'FuzzyFinder'
@@ -21,14 +35,22 @@ Bundle 'FSwitch'
 Bundle 'ProtoDef'
 Bundle 'commentary.vim'
 Bundle 'The-NERD-Commenter'
-if os == "Linux"
+Bundle 'surround.vim'
+Bundle 'The-NERD-tree'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+
+if osLinux == linuxName
     Bundle 'tpope/vim-fugitive'
     Bundle 'clang-complete'
     Bundle 'tpope/vim-rails.git'
     Bundle 'ctrlp.vim'
 endif
-" non github repos
-Bundle 'git://git.wincent.com/command-t.git'
+
+if osWindows == windowsName
+    Bundle 'cscope.vim'
+    Bundle 'OmniCppComplete'
+endif
 
 filetype plugin indent on     " required!
 
@@ -58,14 +80,20 @@ set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
 set undofile
-set undodir=~/.tmp
 set directory=~/.tmp
+if osLinux == linuxName
+    set undodir=~/.tmp
+endif
+if osWindows == windowsName
+    set undodir=~/.vimundo
+endif
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.xml,*.obj,*.log,*.rsp
 set showmatch		" Show matching brackets.
 set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
@@ -83,10 +111,8 @@ set scrolloff=8
 set sidescrolloff=8
 set history=500
 " configure tags - add additional tags here or comment out not-used ones
-set tags+=c:\tags\cpp
-set tags+=OAMtags
 set foldmethod=syntax
-set guifont=Lucida_Console:14h
+set guifont=Lucida_Console:h8:cANSI
 set guioptions-=m
 set guioptions-=l
 set guioptions-=r
@@ -103,23 +129,29 @@ highlight StatusLine ctermfg=blue ctermbg=yellow
 
 
 
-"if &t_Co >= 256 || has("gui_running")
-"colorscheme molokai
-"colorscheme darkblue
-colorscheme zellner
-"endif
+if osWindows == windowsName
+    colorscheme desert
+endif
 
+if osLinux == linuxName
+    colorscheme zellner
+endif
 
 if has("syntax")
     syntax on
 endif
 
 if has("autocmd")
-    if os == "Linux"
+    if osLinux == linuxName
         autocmd! bufwritepost vimrc source ~/.vim/vimrc
         autocmd! bufwritepost .vimrc source ~/.vim/vimrc
         autocmd BufRead *.cpp :call FormatCpp()
         autocmd BufRead *.h :call FormatCpp()
+    endif
+    if osWindows == windowsName
+        autocmd! bufwritepost vimrc source $VIM/vimrc
+        autocmd! bufwritepost .vimrc source $VIM/vimrc
+        autocmd BufRead *.xml :% !xmllint.exe % --format
     endif
 endif
 
@@ -177,8 +209,15 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 map <C-x> <C-w>c
 
-nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
-nnoremap <silent> <leader>sv :so ~/.vim/vimrc<CR>
+if osLinux == linuxName
+    nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
+    nnoremap <silent> <leader>sv :so ~/.vim/vimrc<CR>
+endif
+
+if osWindows == windowsName
+    nnoremap <silent> <leader>ev :e $VIM/vimrc<CR>
+    nnoremap <silent> <leader>sv :so $VIM/vimrc<CR>
+endif
 
 nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 
@@ -186,6 +225,14 @@ nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 nnoremap <Space> zA
 vnoremap <Space> zA
 "
+
+nnoremap <leader>fo :call FormatCpp()<CR><CR>
+nnoremap <leader>zf :FufCoverageFile<CR>
+nnoremap <leader>zl :FufLine<CR>
+nnoremap <leader>zb :FufBuffer<CR>
+nnoremap <leader>zt :FufTag<CR>
+
+nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 
 "fugitive mappings
 nnoremap <silent> <leader>gs :Gstatus<CR> "getting status
@@ -209,20 +256,38 @@ nmap <silent> <Leader>oh :FSLeft<cr>
 "Switch to the file and load it into a new window split on the left 
 nmap <silent> <Leader>oH :FSSplitLeft<cr>
 
-"setings for tagbar
-let g:tagbar_left=1
-nnoremap <silent> <F9> :TagbarToggle<CR>
-
-" build tags of your own project with Ctrl-F12
-map <C-F12> :silent !ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-map <C-F11> :silent !cscope -b -R<CR>
-map <C-F10> :silent !ctags -R -L ctags_includes --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q -f OAMtags<CR>
-
-nnoremap <Leader>f :call FormatCpp()<CR>
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
 let g:LustyJugglerSuppressRubyWarning = 1
 
-if os == "Linux"
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby imap <S-CR> <CR><CR>end<Esc>-cc
+autocmd FileType cpp imap <S-CR> <CR><CR>}<Esc>-cc
+
+" build tags of your own project with Ctrl-F12
+if osWindows == windowsName
+    set tags+=c:\tags\cpp
+    set tags+=OAMtags
+    map <C-F10> :silent !ctags -R -L ctags_includes --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q -f OAMtags<CR>
+    map <C-F11> :silent !cscope -b -R<CR>
+    map <C-F12> :silent !ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+    let s:ruby_path = 'C:\Ruby192\bin'
+    " OmniCppComplete
+    let OmniCpp_NamespaceSearch = 1
+    let OmniCpp_GlobalScopeSearch = 1
+    let OmniCpp_ShowAccess = 1
+    let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+    let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+    let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+    let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+    let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+endif
+
+
+if osLinux == linuxName
     let g:clang_use_library=1
     let g:clang_library_path="/usr/lib/libclang.so.1"
     nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
@@ -262,14 +327,16 @@ function! FormatCpp()
     "convert something==something -> something == something
     silent! %s/\(\S\)\([=!>+<]\{1\}=\)/\1 \2/
     silent! %s/\([=!>+<]\{1\}=\)\(\S\)/\1 \2/
+    silent! %s/\(\S\)\(<<\)/\1 \2/
+    silent! %s/\(<<\)\(\S\)/\1 \2/
 
     "removing whitspace from ==
     silent! %s/\s\{2,}\([=!>+<]=\)/ \1/
     silent! %s/\([=!>+<]=\)\s\{2,}/\1 /
 
     "converting  smth     = -> smth =
-    silent! %s/\s\{2,\}\([=<>]\)/ \1/
-    silent! %s/\([=<>]\)\s\{2,\}/\1 /
+    silent! %s/\s\{2,\}\([=,<>/]\)/ \1/
+    silent! %s/\([=,<>/]\)\s\{2,\}/\1 /
 
     "formatting
     silent! normal ggVG=
