@@ -149,8 +149,8 @@ if has("autocmd")
         autocmd BufRead *.h :call FormatCpp()
     endif
     if osWindows == windowsName
-        autocmd! bufwritepost vimrc source $VIM/vimrc
-        autocmd! bufwritepost .vimrc source $VIM/vimrc
+        autocmd! bufwritepost vimrc source c:\dotfiles\vimrc
+        autocmd! bufwritepost .vimrc source c:\dotfiles\vimrc
         autocmd BufRead *.xml :% !xmllint.exe % --format
     endif
 endif
@@ -215,8 +215,8 @@ if osLinux == linuxName
 endif
 
 if osWindows == windowsName
-    nnoremap <silent> <leader>ev :e $VIM/vimrc<CR>
-    nnoremap <silent> <leader>sv :so $VIM/vimrc<CR>
+    nnoremap <silent> <leader>ev :e c:\dotfiles\vimrc<CR>
+    nnoremap <silent> <leader>sv :so c:\dotfiles\vimrc<CR>
 endif
 
 nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
