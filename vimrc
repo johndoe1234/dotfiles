@@ -88,7 +88,7 @@ if osWindows == windowsName
     set undodir=~/.vimundo
 endif
 set wildignore+=.hg,.git,.svn                    " Version control
-set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.aux,*.toc                " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
@@ -194,6 +194,12 @@ nnoremap ; :
 "exiting insert mode with jj
 inoremap jj <ESC>l
 inoremap kk <ESC>l
+
+
+inoremap "" ""<ESC>i
+inoremap (( ()<ESC>i
+inoremap {{ {<CR>}<ESC>ko
+
 
 "create new vertical split window and move to it
 nnoremap <leader>w <C-w>v<C-w>l
