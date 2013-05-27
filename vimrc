@@ -8,7 +8,21 @@ let linuxName=1
 let osWindows = has("win32")
 let windowsName=1
 
+if has("syntax")
+    syntax on
+endif
 
+let mapleader = ","
+
+if osLinux == linuxName
+    nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
+    nnoremap <silent> <leader>sv :so ~/.vim/vimrc<CR>
+endif
+
+if osWindows == windowsName
+    nnoremap <silent> <leader>ev :e c:\dotfiles\vimrc<CR>
+    nnoremap <silent> <leader>sv :so c:\dotfiles\vimrc<CR>
+endif
 if osLinux == linuxName
     set rtp+=~/.vim/bundle/vundle/
 endif
@@ -18,6 +32,21 @@ if osWindows == windowsName
     au GUIEnter * simalt ~x "x on an English Windows version. n on a French one
 endif
 
+if has("autocmd")
+    if osLinux == linuxName
+        autocmd! bufwritepost vimrc source ~/.vim/vimrc
+        autocmd! bufwritepost .vimrc source ~/.vim/vimrc
+        autocmd BufRead *.cpp :call FormatCpp()
+        autocmd BufRead *.h :call FormatCpp()
+    endif
+    if osWindows == windowsName
+        autocmd! bufwritepost vimrc source c:\dotfiles\vimrc
+        autocmd! bufwritepost .vimrc source c:\dotfiles\vimrc
+        autocmd BufRead *.xml :% !xmllint.exe % --format
+    endif
+endif
+
+"remap leader from \ to ,
 call vundle#rc()
 
 " let Vundle manage Vundle
@@ -45,7 +74,12 @@ if osLinux == linuxName
     Bundle 'clang-complete'
     Bundle 'tpope/vim-rails.git'
     Bundle 'ctrlp.vim'
+    Bundle 'SirVer/ultisnips'
+    Bundle 'ScrollColors'
+    Bundle 'flazz/vim-colorschemes'
+    Bundle 'ervandew/supertab'
 endif
+
 
 if osWindows == windowsName
     Bundle 'cscope.vim'
@@ -128,35 +162,14 @@ set pumheight=20
 highlight StatusLine ctermfg=blue ctermbg=yellow
 
 
-
 if osWindows == windowsName
     colorscheme desert
 endif
 
 if osLinux == linuxName
-    colorscheme zellner
+    colorscheme CodeFactoryv3
 endif
 
-if has("syntax")
-    syntax on
-endif
-
-if has("autocmd")
-    if osLinux == linuxName
-        autocmd! bufwritepost vimrc source ~/.vim/vimrc
-        autocmd! bufwritepost .vimrc source ~/.vim/vimrc
-        autocmd BufRead *.cpp :call FormatCpp()
-        autocmd BufRead *.h :call FormatCpp()
-    endif
-    if osWindows == windowsName
-        autocmd! bufwritepost vimrc source c:\dotfiles\vimrc
-        autocmd! bufwritepost .vimrc source c:\dotfiles\vimrc
-        autocmd BufRead *.xml :% !xmllint.exe % --format
-    endif
-endif
-
-"remap leader from \ to ,
-let mapleader = ","
 
 
 "MAPPINGS
@@ -216,15 +229,6 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 map <C-x> <C-w>c
 
-if osLinux == linuxName
-    nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
-    nnoremap <silent> <leader>sv :so ~/.vim/vimrc<CR>
-endif
-
-if osWindows == windowsName
-    nnoremap <silent> <leader>ev :e c:\dotfiles\vimrc<CR>
-    nnoremap <silent> <leader>sv :so c:\dotfiles\vimrc<CR>
-endif
 
 nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 
@@ -295,25 +299,35 @@ endif
 
 
 if osLinux == linuxName
+    set makeprg=clang++\ %
+    nnoremap <Leader>m :make<CR>
+
     let g:clang_use_library=1
-    let g:clang_library_path="/usr/lib/libclang.so.1"
+    let g:clang_library_path="/usr/lib/"
     nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-    let g:clang_complete_auto = 0
+    let g:clang_complete_auto = 1
     let g:clang_complete_copen = 1
     let g:clang_auto_select=1
     let g:clang_hl_errors=1
-    let g:clang_periodic_quickfix=0
+    let g:clang_periodic_quickfix=1
     let g:clang_snippets=1
-    let g:clang_snippets_engine="clang_complete"
+	let g:clang_snippets_engine='ultisnips'
     let g:clang_conceal_snippets=1
     let g:clang_exec="clang"
     let g:clang_user_options=""
     let g:clang_auto_user_options="path, .clang_complete"
     let g:clang_sort_algo="priority"
     let g:clang_complete_macros=1
-    let g:clang_complete_patterns=0
+    let g:clang_complete_patterns=1
+    let g:clang_trailing_placeholder=1 " add trailing placeholder after function
+    let g:clang_close_preview=1 " close preview window after completion
     nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
+
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 endif
+
 
 function! FormatCpp()
     let save_cursor = getpos(".")
