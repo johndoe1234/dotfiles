@@ -198,6 +198,7 @@ inoremap kk <ESC>l
 
 inoremap "" ""<ESC>i
 inoremap (( ()<ESC>i
+inoremap [[ []<ESC>i
 inoremap {{ {<CR>}<ESC>ko
 
 
