@@ -3,10 +3,10 @@ filetype off                   " required!
 
 
 "os detection to enable correct mappings and plugins
-let osLinux = has("unix")
-let linuxName=1
-let osWindows = has("win32")
-let windowsName=1
+let isOsLinux = has("unix")
+let runningOnLinux=1
+let isOsWindows = has("win32")
+let runningOnWindows=1
 
 if has("syntax")
     syntax on
@@ -14,36 +14,15 @@ endif
 
 let mapleader = ","
 
-if osLinux == linuxName
-    nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
-    nnoremap <silent> <leader>sv :so ~/.vim/vimrc<CR>
-endif
-
-if osWindows == windowsName
-    nnoremap <silent> <leader>ev :e c:\dotfiles\vimrc<CR>
-    nnoremap <silent> <leader>sv :so c:\dotfiles\vimrc<CR>
-endif
-if osLinux == linuxName
-    set rtp+=~/.vim/bundle/vundle/
-endif
-
-if osWindows == windowsName
+if isOsWindows == runningOnWindows
+    let g:dotFilesLocation = 'c:\dotfiles\'
+    execute "so " . dotFilesLocation . "vimrc_windows"
     set rtp+=$VIM/bundle/vundle/
-    au GUIEnter * simalt ~x "x on an English Windows version. n on a French one
 endif
 
-if has("autocmd")
-    if osLinux == linuxName
-        autocmd! bufwritepost vimrc source ~/.vim/vimrc
-        autocmd! bufwritepost .vimrc source ~/.vim/vimrc
-        autocmd BufRead *.cpp :call FormatCpp()
-        autocmd BufRead *.h :call FormatCpp()
-    endif
-    if osWindows == windowsName
-        autocmd! bufwritepost vimrc source c:\dotfiles\vimrc
-        autocmd! bufwritepost .vimrc source c:\dotfiles\vimrc
-        autocmd BufRead *.xml :% !xmllint.exe % --format
-    endif
+if isOsLinux == runningOnLinux
+    set rtp+=~/.vim/bundle/vundle/
+    source ~/.vim/vimrc_linux
 endif
 
 "remap leader from \ to ,
@@ -66,22 +45,19 @@ Bundle 'commentary.vim'
 Bundle 'The-NERD-Commenter'
 Bundle 'surround.vim'
 Bundle 'The-NERD-tree'
-" non github repos
-Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'ScrollColors'
+Bundle 'flazz/vim-colorschemes'
 
-if osLinux == linuxName
+if isOsLinux == runningOnLinux
     Bundle 'tpope/vim-fugitive'
     Bundle 'clang-complete'
     Bundle 'tpope/vim-rails.git'
     Bundle 'ctrlp.vim'
     Bundle 'SirVer/ultisnips'
-    Bundle 'ScrollColors'
-    Bundle 'flazz/vim-colorschemes'
     Bundle 'ervandew/supertab'
 endif
 
-
-if osWindows == windowsName
+if isOsWindows == runningOnWindows
     Bundle 'cscope.vim'
     Bundle 'OmniCppComplete'
 endif
@@ -115,12 +91,6 @@ set laststatus=2
 set relativenumber
 set undofile
 set directory=~/.tmp
-if osLinux == linuxName
-    set undodir=~/.tmp
-endif
-if osWindows == windowsName
-    set undodir=~/.vimundo
-endif
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.toc                " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
@@ -162,13 +132,7 @@ set pumheight=20
 highlight StatusLine ctermfg=blue ctermbg=yellow
 
 
-if osWindows == windowsName
-    colorscheme desert
-endif
 
-if osLinux == linuxName
-    colorscheme CodeFactoryv3
-endif
 
 
 
@@ -277,57 +241,6 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby imap <S-CR> <CR><CR>end<Esc>-cc
 autocmd FileType cpp imap <S-CR> <CR><CR>}<Esc>-cc
-
-" build tags of your own project with Ctrl-F12
-if osWindows == windowsName
-    set tags+=c:\tags\cpp
-    set tags+=OAMtags
-    map <C-F10> :silent !ctags -R -L ctags_includes --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q -f OAMtags<CR>
-    map <C-F11> :silent !cscope -b -R<CR>
-    map <C-F12> :silent !ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-    let s:ruby_path = 'C:\Ruby192\bin'
-    " OmniCppComplete
-    let OmniCpp_NamespaceSearch = 1
-    let OmniCpp_GlobalScopeSearch = 1
-    let OmniCpp_ShowAccess = 1
-    let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-    let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-    let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-    let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-    let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-endif
-
-
-if osLinux == linuxName
-    set makeprg=clang++\ %
-    nnoremap <Leader>m :make<CR>
-
-    let g:clang_use_library=1
-    let g:clang_library_path="/usr/lib/"
-    nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-    let g:clang_complete_auto = 1
-    let g:clang_complete_copen = 1
-    let g:clang_auto_select=1
-    let g:clang_hl_errors=1
-    let g:clang_periodic_quickfix=1
-    let g:clang_snippets=1
-	let g:clang_snippets_engine='ultisnips'
-    let g:clang_conceal_snippets=1
-    let g:clang_exec="clang"
-    let g:clang_user_options=""
-    let g:clang_auto_user_options="path, .clang_complete"
-    let g:clang_sort_algo="priority"
-    let g:clang_complete_macros=1
-    let g:clang_complete_patterns=1
-    let g:clang_trailing_placeholder=1 " add trailing placeholder after function
-    let g:clang_close_preview=1 " close preview window after completion
-    nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-
-    let g:UltiSnipsExpandTrigger="<tab>"
-    let g:UltiSnipsJumpForwardTrigger="<tab>"
-    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-endif
-
 
 function! FormatCpp()
     let save_cursor = getpos(".")
