@@ -47,10 +47,10 @@ Bundle 'surround.vim'
 Bundle 'The-NERD-tree'
 Bundle 'ScrollColors'
 Bundle 'flazz/vim-colorschemes'
+Bundle 'clang-complete'
 
 if isOsLinux == runningOnLinux
     Bundle 'tpope/vim-fugitive'
-    Bundle 'clang-complete'
     Bundle 'tpope/vim-rails.git'
     Bundle 'ctrlp.vim'
     Bundle 'SirVer/ultisnips'
