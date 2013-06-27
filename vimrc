@@ -272,6 +272,11 @@ function! FormatCpp()
     silent! %s/\s\{2,\}\([=,<>/]\)/ \1/
     silent! %s/\([=,<>/]\)\s\{2,\}/\1 /
 
+
+    "chainging if ( to if(
+    silent! %s/\([a-z]\)\s\+(/\1(/
+    silent! %s/\([a-z]\)\s\+)/\1)/
+
     "formatting
     silent! normal ggVG=
 
