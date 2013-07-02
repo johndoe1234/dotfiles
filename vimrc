@@ -284,3 +284,26 @@ function! FormatCpp()
     call setpos('.', save_cursor)
     call setreg('/', old_query)
 endfunction
+
+let g:diffed_buffers=[]
+function! DiffText(a, b, diffed_buffers)
+    enew
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:a, "\n"))
+    diffthis
+    vnew
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:b, "\n"))
+    diffthis
+endfunction
+ 
+function! WipeOutDiffs(diffed_buffers)
+    for buffer in a:diffed_buffers
+        execute 'bwipeout! '.buffer
+    endfor
+endfunction
+
+nnoremap <special> <leader>dd :call DiffText(@a, @b, g:diffed_buffers)<CR>
+nnoremap <special> <leader>dw :call WipeOutDiffs(g:diffed_buffers) | let g:diffed_buffers=[]
