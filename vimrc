@@ -129,6 +129,11 @@ set completeopt=menu,menuone
 " Limit popup menu height
 set pumheight=20
 
+if &diff
+    " diff mode
+    set diffopt+=iwhite
+endif
+
 highlight StatusLine ctermfg=blue ctermbg=yellow
 
 
