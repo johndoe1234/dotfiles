@@ -37,7 +37,8 @@ let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 
 let g:clang_use_library=1
-let g:clang_library_path="C:/test/vim_clean/clang/"
+"let g:clang_library_path="C:/test/vim_clean/clang/"
+let g:clang_library_path="C:/clang/bin/"
 nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
