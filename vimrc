@@ -47,7 +47,13 @@ Bundle 'surround.vim'
 Bundle 'The-NERD-tree'
 Bundle 'ScrollColors'
 Bundle 'flazz/vim-colorschemes'
+Bundle 'Shougo/neocomplete.vim'
+Bundle 'Shougo/neosnippet.vim'
+Bundle 'honza/vim-snippets'
+Bundle 'bling/vim-airline'
+Bundle 'terryma/vim-multiple-cursors'
 Bundle 'clang-complete'
+Bundle 'kien/ctrlp.vim'
 
 if isOsLinux == runningOnLinux
     Bundle 'tpope/vim-fugitive'
@@ -68,6 +74,7 @@ filetype plugin indent on     " required!
 au FocusLost * :wa
 
 "settings
+set clipboard+=unnamed
 set autowrite		" Automatically save before commands like :next and :make
 set autoread		
 set tabstop=4
@@ -83,7 +90,7 @@ set hidden             " Hide buffers when they are abandoned
 set wildmenu
 set wildmode=list:longest,full
 set visualbell
-set cursorline
+"set cursorline
 set ttyfast
 set ruler
 set backspace=indent,eol,start
@@ -135,7 +142,6 @@ if &diff
 endif
 
 highlight StatusLine ctermfg=blue ctermbg=yellow
-
 
 
 
