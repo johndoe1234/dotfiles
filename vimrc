@@ -35,7 +35,7 @@ Bundle 'gmarik/vundle'
 "common plugins
 Bundle 'tpope/vim-unimpaired'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'FuzzyFinder'
+"Bundle 'FuzzyFinder'
 Bundle 'L9'
 Bundle 'molokai'
 Bundle 'LustyJuggler'
@@ -75,8 +75,8 @@ au FocusLost * :wa
 
 "settings
 set clipboard+=unnamed
-set autowrite		" Automatically save before commands like :next and :make
-set autoread		
+set autowrite       " Automatically save before commands like :next and :make
+set autoread
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -105,12 +105,12 @@ set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.xml,*.obj,*.log,*.rsp
-set showmatch		" Show matching brackets.
-set ignorecase		" Do case insensitive matching
-set smartcase		" Do smart case matching
-set incsearch		" Incremental search
+set showmatch       " Show matching brackets.
+set ignorecase      " Do case insensitive matching
+set smartcase       " Do smart case matching
+set incsearch       " Incremental search
 set gdefault        " automatic adding g in regexp substisute :%s/something/else/g
-set showcmd		" Show (partial) command in status line.
+set showcmd     " Show (partial) command in status line.
 set hlsearch 
 set wrap
 set textwidth=79
@@ -213,10 +213,10 @@ vnoremap <Space> zA
 "
 
 nnoremap <leader>fo :call FormatCpp()<CR><CR>
-nnoremap <leader>zf :FufCoverageFile<CR>
-nnoremap <leader>zl :FufLine<CR>
-nnoremap <leader>zb :FufBuffer<CR>
-nnoremap <leader>zt :FufTag<CR>
+nnoremap <leader>zf :CtrlPMixed<CR>
+nnoremap <leader>zl :CtrlPLine<CR>
+nnoremap <leader>zb :CtrlPBuffer<CR>
+nnoremap <leader>zt :CtrlPTag<CR>
 
 nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 
