@@ -9,31 +9,6 @@ autocmd BufRead *.cpp :call FormatCpp()
 autocmd BufRead *.h :call FormatCpp()
 
 set undodir=~/.tmp
-colorscheme CodeFactoryv3
 set makeprg=clang++\ %
 nnoremap <Leader>m :make<CR>
 
-let g:clang_use_library=1
-let g:clang_library_path="/usr/lib/"
-nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-let g:clang_complete_auto = 1
-let g:clang_complete_copen = 1
-let g:clang_auto_select=1
-let g:clang_hl_errors=1
-let g:clang_periodic_quickfix=1
-let g:clang_snippets=1
-let g:clang_snippets_engine='ultisnips'
-let g:clang_conceal_snippets=1
-let g:clang_exec="clang"
-let g:clang_user_options=""
-let g:clang_auto_user_options="path, .clang_complete"
-let g:clang_sort_algo="priority"
-let g:clang_complete_macros=1
-let g:clang_complete_patterns=1
-let g:clang_trailing_placeholder=1 " add trailing placeholder after function
-let g:clang_close_preview=1 " close preview window after completion
-nnoremap <Leader>q :call g:ClangUpdateQuickFix()<CR>
-
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
