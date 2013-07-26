@@ -249,21 +249,9 @@ let g:LustyJugglerSuppressRubyWarning = 1
 
 imap <S-CR> <CR><CR>}<Esc>-cc
 
-"if !exists('g:neocomplete#force_omni_input_patterns')
-    "let g:neocomplete#force_omni_input_patterns = {}
-"endif
-"let g:neocomplete#force_overwrite_completefunc = 1
-"let g:neocomplete#force_omni_input_patterns.c =
-            "\ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
-"let g:neocomplete#force_omni_input_patterns.cpp =
-            "\ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-"let g:neocomplete#force_omni_input_patterns.objc =
-            "\ '[^.[:digit:] *\t]\%(\.\|->\)\w*'
-"let g:neocomplete#force_omni_input_patterns.objcpp =
-            "\ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-let g:neocomplete#enable_fuzzy_completion = 1
-let g:neocomplete#enable_auto_select = 1
-let g:neocomplete#enable_at_startup = 1
+"let g:neocomplete#enable_fuzzy_completion = 1
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#enable_at_startup = 1
 
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 
@@ -273,6 +261,12 @@ let g:ctrlp_by_filename=1
 let g:ctrlp_match_window = 'top,order:btt,min:1,max:10'
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
+
+let g:ycm_confirm_extra_conf = 0
+
+
+
+
 function! FormatCpp()
     let save_cursor = getpos(".")
     let old_query = getreg('/')

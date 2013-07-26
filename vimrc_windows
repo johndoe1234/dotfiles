@@ -58,6 +58,8 @@ set makeprg=clang++\ %
 nnoremap <Leader>m :make<CR><CR>
 nnoremap <Leader>c2 :execute "!ruby " . $VIM . '\tools\clang_complete_gen.rb "REL2"'<CR><CR>
 nnoremap <Leader>c3 :execute "!ruby " . $VIM . '\tools\clang_complete_gen.rb "REL3"'<CR><CR>
+nnoremap <Leader>y2 :execute "!ruby " . $VIM . '\tools\ycm_gen.rb "REL2"'<CR><CR>
+nnoremap <Leader>y3 :execute "!ruby " . $VIM . '\tools\ycm_gen.rb "REL3"'<CR><CR>
 nnoremap <Leader>ct :execute "!ruby " . $VIM . '\tools\ctags.rb'<CR><CR>
 
 function! CscopeRenew()
