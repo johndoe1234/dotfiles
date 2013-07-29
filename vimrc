@@ -48,6 +48,7 @@ Bundle 'bling/vim-airline'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'Yggdroot/indentLine'
 
 if isOsLinux == runningOnLinux
     "Bundle 'tpope/vim-fugitive'
