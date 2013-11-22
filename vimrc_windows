@@ -53,6 +53,29 @@ map <C-F12> :silent !ctags.exe -R --sort=yes --c++-kinds=+p --fields=+iaS --extr
 ""so thet neocomplete can coexist with clang_complete
 "let g:clang_complete_auto = 0
 "let g:clang_auto_select = 0
+function FunForQuickfix(makeprgIn, makeefmIn)
+  try
+    let save_makeprg=&makeprg
+    let save_makeefm=&efm
+    let &makeprg=a:makeprgIn
+    let &efm=a:makeefmIn
+    :wa
+    :make
+    :cw
+  finally
+    let &makeprg=save_makeprg
+    let &efm=save_makeefm
+  endtry
+endfunction
+
+function CppCheck()
+  "call FunForQuickfix("cppcheck *.cpp -j 8 --enable=all", "\[%f:%l\]:\ %m")
+  call FunForQuickfix('cppcheck ' . @% . ' -j 8 --enable=all', "\[%f:%l\]:\ %m")
+endfunction
+
+nmap <Leader>cp :wa<CR>:call CppCheck()<CR>
+nmap <F3> :cp<cr>
+nmap <F4> :cn<cr>
 
 set makeprg=clang++\ %
 nnoremap <Leader>m :make<CR><CR>

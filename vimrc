@@ -34,6 +34,7 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'molokai'
 Bundle 'LustyJuggler'
+Bundle 'Tabular'
 Bundle 'FSwitch'
 Bundle 'The-NERD-Commenter'
 Bundle 'surround.vim'
@@ -105,6 +106,7 @@ set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*\\Users\\kozlopio\\Appdata\\*
 set wildignore+=*.xml,*.obj,*.log,*.rsp
 set showmatch       " Show matching brackets.
 set ignorecase      " Do case insensitive matching
@@ -224,6 +226,7 @@ nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 "fugitive mappings
 nnoremap <silent> <leader>gs :Gstatus<CR> "getting status
 
+
 "FSwitch definitions and mappings
 augroup mycppfiles
     au!
@@ -256,7 +259,7 @@ imap <S-CR> <CR><CR>}<Esc>-cc
 
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 
-"CtrlP settings
+"CtrlP settings 
 let g:ctrlp_working_path_mode = 'o'
 let g:ctrlp_by_filename=1
 let g:ctrlp_match_window = 'top,order:btt,min:1,max:10'
@@ -266,7 +269,8 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 let g:ycm_confirm_extra_conf = 0
 
 
-
+"highlight trailing white space at the end of the line
+match Todo /\s\+$/     
 
 function! FormatCpp()
     let save_cursor = getpos(".")
