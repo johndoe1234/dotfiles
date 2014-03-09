@@ -19,7 +19,7 @@ endif
 
 if isOsLinux == runningOnLinux
     set rtp+=~/.vim/bundle/vundle/
-    source ~/.vim/vimrc_linux
+    source ~/dotfiles/vimrc_linux
 endif
 
 "remap leader from \ to ,
