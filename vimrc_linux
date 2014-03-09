@@ -1,10 +1,10 @@
-nnoremap <silent> <leader>ev :e ~/.vim/vimrc<CR>
-nnoremap <silent> <leader>el :e ~/.vim/vimrc_linux<CR>
-nnoremap <silent> <leader>sv :so ~/.vim/vimrc<CR>
+nnoremap <silent> <leader>ev :e ~/dotfiles/vimrc<CR>
+nnoremap <silent> <leader>el :e ~/dotfiles/vimrc_linux<CR>
+nnoremap <silent> <leader>sv :so ~/dotfiles/vimrc<CR>
 
-autocmd! bufwritepost vimrc source ~/.vim/vimrc
-autocmd! bufwritepost .vimrc source ~/.vim/vimrc
-autocmd! bufwritepost vimrc_linux source ~/.vim/vimrc
+autocmd! bufwritepost vimrc source ~/dotfiles/vimrc
+autocmd! bufwritepost .vimrc source ~/dotfiles/vimrc
+autocmd! bufwritepost vimrc_linux source ~/dotfiles/vimrc
 autocmd BufRead *.cpp :call FormatCpp()
 autocmd BufRead *.h :call FormatCpp()
 

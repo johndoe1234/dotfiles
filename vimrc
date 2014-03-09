@@ -22,6 +22,8 @@ if isOsLinux == runningOnLinux
     source ~/dotfiles/vimrc_linux
 endif
 
+set undodir=~/.vimundo/
+
 "remap leader from \ to ,
 call vundle#rc()
 
