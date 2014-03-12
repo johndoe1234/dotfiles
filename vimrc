@@ -27,8 +27,9 @@ set undodir=~/.vimundo/
 "remap leader from \ to ,
 call vundle#rc()
 
+
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
 
 "common plugins
@@ -52,6 +53,13 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'Yggdroot/indentLine'
+Bundle 'vim-scripts/DfrankUtil'
+Bundle 'vim-scripts/vimprj'
+Bundle 'phreaknerd/vim-indexer'
+
+if has("syntax")
+    syntax on
+endif
 
 if isOsLinux == runningOnLinux
     "Bundle 'tpope/vim-fugitive'
@@ -67,9 +75,6 @@ if isOsWindows == runningOnWindows
     "Bundle 'OmniCppComplete'
 endif
 
-if has("syntax")
-    syntax on
-endif
 
 filetype plugin indent on     " required!
 
@@ -120,13 +125,14 @@ set hlsearch
 set wrap
 set textwidth=79
 set formatoptions=qrn1
-set colorcolumn=85
+"set colorcolumn=85
 set list
 set listchars=tab:▸\ ,eol:¬,trail:.,extends:#,nbsp:.
 set scrolloff=8
 set sidescrolloff=8
 set history=500
 " configure tags - add additional tags here or comment out not-used ones
+set foldlevel=99
 set foldmethod=syntax
 set guifont=Lucida_Console:h8:cANSI
 set guioptions-=m
