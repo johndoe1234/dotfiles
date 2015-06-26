@@ -5,10 +5,11 @@ nnoremap <silent> <leader>sv :so ~/dotfiles/vimrc<CR>
 autocmd! bufwritepost vimrc source ~/dotfiles/vimrc
 autocmd! bufwritepost .vimrc source ~/dotfiles/vimrc
 autocmd! bufwritepost vimrc_linux source ~/dotfiles/vimrc
-autocmd BufRead *.cpp :call FormatCpp()
-autocmd BufRead *.h :call FormatCpp()
+"autocmd BufRead *.cpp :call FormatCpp()
+"autocmd BufRead *.h :call FormatCpp()
 
 set undodir=~/.tmp
-set makeprg=clang++\ %
-nnoremap <Leader>m :make<CR>
-
+set makeprg=clang++\ -g\ %
+"nnoremap <Leader>m :make<CR>
+nnoremap <S-Insert> "+P
+inoremap <S-Insert> <C-r>+

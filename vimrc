@@ -6,10 +6,16 @@ filetype off                   " required!
 let isOsLinux = has("unix")
 let runningOnLinux=1
 let isOsWindows = has("win32")
-let runningOnWindows=1
-
+let runningOnWindows = 1
+let isGUIOn = has("gui_running")
 
 let mapleader = ","
+
+if isGUIOn
+    " GUI is running or is about to start.
+    " Maximize gvim window.
+    set lines=999 columns=999
+endif
 
 if isOsWindows == runningOnWindows
     let g:dotFilesLocation = 'c:\dotfiles\'
@@ -22,52 +28,63 @@ if isOsLinux == runningOnLinux
     source ~/dotfiles/vimrc_linux
 endif
 
-set undodir=~/.vimundo/
 
-"remap leader from \ to ,
 call vundle#rc()
-
-
-" let Vundle manage Vundle
-" required!
 Bundle 'gmarik/vundle'
-
-"common plugins
-Bundle 'tpope/vim-unimpaired'
-Bundle 'Lokaltog/vim-easymotion'
 Bundle 'molokai'
-Bundle 'LustyJuggler'
-Bundle 'Tabular'
-Bundle 'FSwitch'
-Bundle 'The-NERD-Commenter'
-Bundle 'surround.vim'
-Bundle 'The-NERD-tree'
-Bundle 'ScrollColors'
-Bundle 'flazz/vim-colorschemes'
-"conflicting with YCM, but usefull for neosnippet
-"Bundle 'Shougo/neocomplete.vim'
-Bundle 'Shougo/neosnippet.vim'
-Bundle 'honza/vim-snippets'
-Bundle 'bling/vim-airline'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'Yggdroot/indentLine'
-Bundle 'vim-scripts/DfrankUtil'
-Bundle 'vim-scripts/vimprj'
-Bundle 'phreaknerd/vim-indexer'
 
-if has("syntax")
-    syntax on
+if 0 == isGUIOn
+    Bundle 'tpope/vim-unimpaired'
+    "Bundle 'Lokaltog/vim-easymotion'
+    Bundle 'LustyJuggler'
+    "Bundle 'Tabular'
+    Bundle 'FSwitch'
+    Bundle 'The-NERD-Commenter'
+    Bundle 'surround.vim'
+    Bundle 'The-NERD-tree'
+    Bundle 'ScrollColors'
+    Bundle 'flazz/vim-colorschemes'
+
+    "conflicting with YCM, but usefull for neosnippet
+    "Bundle 'Shougo/neocomplete.vim'
+    "Bundle 'Shougo/neosnippet.vim'
+    Bundle 'honza/vim-snippets'
+    Bundle 'bling/vim-airline'
+    "Bundle 'terryma/vim-multiple-cursors'
+    Bundle 'kien/ctrlp.vim'
+    Bundle 'Valloric/YouCompleteMe'
+    Bundle 'Yggdroot/indentLine'
+    "Bundle 'vim-scripts/DfrankUtil'
+    "Bundle 'vim-scripts/vimprj'
+    "Bundle 'phreaknerd/vim-indexer'
+    Bundle 'funorpain/vim-cpplint'
+    Bundle 'rking/ag.vim'
+    Bundle 'marijnh/tern_for_vim'
+
+    "JavaScript plugins
+    "Bundle 'wookiehangover/jshint.vim'
+    "Bundle 'Shutnik/jshint2.vim'
+    Bundle 'scrooloose/syntastic'
+    Bundle 'jaxbot/browserlink.vim'
 endif
 
+"JavaScirpt variables
+"let jshint2_read = 1
+"let jshint2_save = 1
+"let jshint2_close = 0
+let g:tern_show_argument_hints="on_hold"
+let g:tern_show_signature_in_pum=1
+
+
+
 if isOsLinux == runningOnLinux
-    "Bundle 'tpope/vim-fugitive'
-    "Bundle 'tpope/vim-rails.git'
-    "Bundle 'SirVer/ultisnips'
-    "Bundle 'ervandew/supertab'
-    Bundle 'scrooloose/syntastic'
-    colorscheme CodeFactoryv3
+    Bundle 'SirVer/ultisnips'
+    Bundle 'tpope/vim-dispatch'
+    Bundle 'jrosiek/vim-mark'
+    "Bundle 'vim-scripts/highlight.vim'
+    "colorscheme CodeFactoryv3
+    colorscheme molokai
+    set rtp+=~/.fzf
 endif
 
 if isOsWindows == runningOnWindows
@@ -75,14 +92,20 @@ if isOsWindows == runningOnWindows
     "Bundle 'OmniCppComplete'
 endif
 
+source /home/koziowsk/dotfiles/vim_scripts/log_grepping.vim
 
 filetype plugin indent on     " required!
 
 
-"when changing focus always write changes to a file
-au FocusLost * :wa
+if 0 == isGUIOn
+    "when changing focus always write changes to a file
+    au FocusLost * :wa
+endif
 
 "settings
+set ic
+set is
+set undodir=~/.vimundo/
 set clipboard+=unnamed
 set autowrite       " Automatically save before commands like :next and :make
 set autoread
@@ -105,6 +128,7 @@ set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set relativenumber
+set number
 set undofile
 set directory=~/.tmp
 set wildignore+=.hg,.git,.svn                    " Version control
@@ -115,7 +139,7 @@ set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*\\Users\\kozlopio\\Appdata\\*
 set wildignore+=*.xml,*.obj,*.log,*.rsp
-set showmatch       " Show matching brackets.
+"set showmatch       " Show matching brackets.
 set ignorecase      " Do case insensitive matching
 set smartcase       " Do smart case matching
 set incsearch       " Incremental search
@@ -131,21 +155,25 @@ set listchars=tab:▸\ ,eol:¬,trail:.,extends:#,nbsp:.
 set scrolloff=8
 set sidescrolloff=8
 set history=500
-" configure tags - add additional tags here or comment out not-used ones
+"configure tags - add additional tags here or comment out not-used ones
 set foldlevel=99
 set foldmethod=syntax
 set guifont=Lucida_Console:h8:cANSI
 set guioptions-=m
 set guioptions-=l
+if 0 == isGUIOn
 set guioptions-=r
+endif
 set guioptions-=T
 set conceallevel=2
 set concealcursor=vin
 " Complete options (disable preview scratch window, longest removed to aways
-" " show menu)
+" show menu)
 set completeopt=menu,menuone
-" Limit popup menu height
+"" Limit popup menu height
 set pumheight=20
+set mouse=a
+syntax on
 
 if &diff
     " diff mode
@@ -160,8 +188,9 @@ highlight StatusLine ctermfg=blue ctermbg=yellow
 
 "MAPPINGS
 command! W w
+command! Wq wq
 "clearing search results
-nnoremap <leader>/ :noh<cr>
+"nnoremap <leader>/ :noh<cr>
 "Disable Ex mode
 map Q <Nop>
 "Disable K looking stuff up
@@ -223,62 +252,75 @@ nnoremap <Space> zA
 vnoremap <Space> zA
 "
 
-nnoremap <leader>fo :call FormatCpp()<CR><CR>
-nnoremap <leader>zf :CtrlPMixed<CR>
-nnoremap <leader>zl :CtrlPLine<CR>
-nnoremap <leader>zb :CtrlPBuffer<CR>
-nnoremap <leader>zt :CtrlPTag<CR>
+if 0 == isGUIOn
+    nnoremap <leader>fo :call FormatCpp()<CR><CR>
+    nnoremap <leader>zf :CtrlPMixed<CR>
+    nnoremap <leader>zl :CtrlPLine<CR>
+    nnoremap <leader>zb :CtrlPBuffer<CR>
+    nnoremap <leader>zt :CtrlPTag<CR>
+    nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 
-nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
-
-"fugitive mappings
-nnoremap <silent> <leader>gs :Gstatus<CR> "getting status
-
-
-"FSwitch definitions and mappings
-augroup mycppfiles
+    "FSwitch definitions and mappings
+    augroup mycppfiles
     au!
     "creating .cpp files if it does not exist,
     "and looking for .cc and .c fle if .cpp does not exist
+    au BufEnter *.h let b:fswitchlocs  = 'reg:/include/static'
+    au BufEnter *.hpp let b:fswitchlocs  = 'reg:/include/static'
+    au BufEnter *.cpp let b:fswitchlocs  = 'reg:/static/include'
+    au BufEnter *.hpp let b:fswitchdst  = 'cpp,cc,C'
     au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
-augroup END
+    au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
+    augroup END
 
-"Switch to the file and load it into the current window 
-nmap <silent> <Leader>of :FSHere<cr>
-"Switch to the file and load it into the window on the right 
-nmap <silent> <Leader>ol :FSRight<cr>
-"Switch to the file and load it into a new window split on the right 
-nmap <silent> <Leader>oL :FSSplitRight<cr>
-"Switch to the file and load it into the window on the left 
-nmap <silent> <Leader>oh :FSLeft<cr>
-"Switch to the file and load it into a new window split on the left 
-nmap <silent> <Leader>oH :FSSplitLeft<cr>
+    "Switch to the file and load it into the current window 
+    nmap <silent> <Leader>of :FSHere<cr>
+    "Switch to the file and load it into the window on the right 
+    nmap <silent> <Leader>ol :FSRight<cr>
+    "Switch to the file and load it into a new window split on the right 
+    nmap <silent> <Leader>oL :FSSplitRight<cr>
+    "Switch to the file and load it into the window on the left 
+    nmap <silent> <Leader>oh :FSLeft<cr>
+    "Switch to the file and load it into a new window split on the left 
+    nmap <silent> <Leader>oH :FSSplitLeft<cr>
+
+    "CtrlP settings 
+    let g:ctrlp_working_path_mode = 'o'
+    let g:ctrlp_by_filename=1
+    let g:ctrlp_match_window = 'top,order:btt,min:1,max:20'
+    let g:ctrlp_map = '<c-p>'
+    let g:ctrlp_cmd = 'CtrlP'
+    "let g:ctrlp_cmd = 'CtrlPMixed'
+    let g:ctrlp_user_command = 'ag %s -i --ignore "*.o" -l --nocolor -g ""'
+    let g:ctrlp_use_caching=0
+    let g:ctrlp_clear_cache_on_exit = 1
+    let g:ctrlp_custom_ignore = {
+        \ 'file': '\v\.(o|so|dll)$',
+        \ }
+    let g:ctrlp_max_files = 0
+    let g:ctrlp_lazy_update = 100
+
+    let g:ycm_confirm_extra_conf = 0
+    let g:ycm_use_ultisnips_completer = 1
+
+    let g:UltiSnipsExpandTrigger="<c-k>"
+    "let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+    " If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit="vertical"
+
+    let g:LustyJugglerSuppressRubyWarning = 1
+endif
+
 
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
-let g:LustyJugglerSuppressRubyWarning = 1
-
-imap <S-CR> <CR><CR>}<Esc>-cc
-
-"let g:neocomplete#enable_fuzzy_completion = 1
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#enable_at_startup = 1
-
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-
-"CtrlP settings 
-let g:ctrlp_working_path_mode = 'o'
-let g:ctrlp_by_filename=1
-let g:ctrlp_match_window = 'top,order:btt,min:1,max:10'
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPMixed'
-
-let g:ycm_confirm_extra_conf = 0
 
 
 "highlight trailing white space at the end of the line
-match Todo /\s\+$/     
+match Todo /\s\+$/
 
 function! FormatCpp()
     let save_cursor = getpos(".")
@@ -336,10 +378,10 @@ function! DiffText(a, b, diffed_buffers)
     call setline(1, split(a:b, "\n"))
     diffthis
 endfunction
- 
+
 function! WipeOutDiffs(diffed_buffers)
     for buffer in a:diffed_buffers
-        execute 'bwipeout! '.buffer
+    execute 'bwipeout! '.buffer
     endfor
 endfunction
 
