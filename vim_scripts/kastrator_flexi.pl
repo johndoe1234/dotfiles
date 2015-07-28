@@ -7,6 +7,7 @@ $tcom_prints_off=1;
 $spmag_prints_off=1;
 $swdl_prints_off=1;
 $oam_shit_prints_off=1;
+$lfs_prints_off=1;
 
 $numArgs = $#ARGV + 1;
 foreach $argnum (0 .. $#ARGV) {
@@ -34,6 +35,10 @@ foreach $argnum (0 .. $#ARGV) {
     {
         $spmag_prints_off=0;
         $tcom_prints_off=0;
+    }
+    if($ARGV[$argnum] =~/lfs/)
+    {
+        $lfs_prints_off=0;
     }
 }
 
@@ -82,7 +87,6 @@ sub delejtSzit
 		$line =~s/.*\/TUP\/.*//;
 		$line =~s/.*\/TRSW\/.*//;
 		$line =~s/.*\/BM\/.*//;
-		$line =~s/.*\/LFS\/.*//;
 		$line =~s/.*\/TECHREP,.*//;
 		$line =~s/.*\/OPT,.*//;
 		$line =~s/.*\/PARA,.*//;
@@ -102,6 +106,11 @@ sub delejtSzit
         $line =~s/^\d+:\d+:\d+.\d+\s+FR1.*//;
         $line =~s/^\d+:\d+:\d+.\d+\s+FR2.*//;
         $line =~s/^\d+:\d+:\d+.\d+\s+LTX.*//;
+
+        if($lfs_prints_off)
+        {
+            $line =~s/.*\/LFS\/.*//;
+        }
 
         if($swdl_prints_off)
         {

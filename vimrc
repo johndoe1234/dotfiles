@@ -35,9 +35,7 @@ Bundle 'molokai'
 
 if 0 == isGUIOn
     Bundle 'tpope/vim-unimpaired'
-    "Bundle 'Lokaltog/vim-easymotion'
     Bundle 'LustyJuggler'
-    "Bundle 'Tabular'
     Bundle 'FSwitch'
     Bundle 'The-NERD-Commenter'
     Bundle 'surround.vim'
@@ -45,33 +43,38 @@ if 0 == isGUIOn
     Bundle 'ScrollColors'
     Bundle 'flazz/vim-colorschemes'
 
-    "conflicting with YCM, but usefull for neosnippet
-    "Bundle 'Shougo/neocomplete.vim'
-    "Bundle 'Shougo/neosnippet.vim'
     Bundle 'honza/vim-snippets'
     Bundle 'bling/vim-airline'
-    "Bundle 'terryma/vim-multiple-cursors'
     Bundle 'kien/ctrlp.vim'
     Bundle 'Valloric/YouCompleteMe'
     Bundle 'Yggdroot/indentLine'
-    "Bundle 'vim-scripts/DfrankUtil'
-    "Bundle 'vim-scripts/vimprj'
-    "Bundle 'phreaknerd/vim-indexer'
     Bundle 'funorpain/vim-cpplint'
     Bundle 'rking/ag.vim'
     Bundle 'marijnh/tern_for_vim'
 
-    "JavaScript plugins
-    "Bundle 'wookiehangover/jshint.vim'
-    "Bundle 'Shutnik/jshint2.vim'
     Bundle 'scrooloose/syntastic'
     Bundle 'jaxbot/browserlink.vim'
+    Bundle 'pangloss/vim-javascript'
 endif
 
-"JavaScirpt variables
-"let jshint2_read = 1
-"let jshint2_save = 1
-"let jshint2_close = 0
+    ""Bundle 'Lokaltog/vim-easymotion'
+    ""Bundle 'Tabular'
+    ""conflicting with YCM, but usefull for neosnippet
+    ""Bundle 'Shougo/neocomplete.vim'
+    ""Bundle 'Shougo/neosnippet.vim'
+    ""Bundle 'terryma/vim-multiple-cursors'
+    ""Bundle 'vim-scripts/DfrankUtil'
+    ""Bundle 'vim-scripts/vimprj'
+    ""Bundle 'phreaknerd/vim-indexer'
+    ""JavaScript plugins
+    ""Bundle 'wookiehangover/jshint.vim'
+    ""Bundle 'Shutnik/jshint2.vim'
+    ""Bundle 'vim-scripts/highlight.vim'
+    ""colorscheme CodeFactoryv3
+""JavaScirpt variables
+""let jshint2_read = 1
+""let jshint2_save = 1
+""let jshint2_close = 0
 let g:tern_show_argument_hints="on_hold"
 let g:tern_show_signature_in_pum=1
 
@@ -81,15 +84,8 @@ if isOsLinux == runningOnLinux
     Bundle 'SirVer/ultisnips'
     Bundle 'tpope/vim-dispatch'
     Bundle 'jrosiek/vim-mark'
-    "Bundle 'vim-scripts/highlight.vim'
-    "colorscheme CodeFactoryv3
     colorscheme molokai
     set rtp+=~/.fzf
-endif
-
-if isOsWindows == runningOnWindows
-    Bundle 'cscope.vim'
-    "Bundle 'OmniCppComplete'
 endif
 
 source /home/koziowsk/dotfiles/vim_scripts/log_grepping.vim
@@ -98,8 +94,8 @@ filetype plugin indent on     " required!
 
 
 if 0 == isGUIOn
-    "when changing focus always write changes to a file
-    au FocusLost * :wa
+   "when changing focus always write changes to a file
+   au FocusLost * :wa
 endif
 
 "settings
@@ -176,8 +172,8 @@ set mouse=a
 syntax on
 
 if &diff
-    " diff mode
-    set diffopt+=iwhite
+   " diff mode
+   set diffopt+=iwhite
 endif
 
 highlight StatusLine ctermfg=blue ctermbg=yellow
@@ -253,64 +249,66 @@ vnoremap <Space> zA
 "
 
 if 0 == isGUIOn
-    nnoremap <leader>fo :call FormatCpp()<CR><CR>
-    nnoremap <leader>zf :CtrlPMixed<CR>
-    nnoremap <leader>zl :CtrlPLine<CR>
-    nnoremap <leader>zb :CtrlPBuffer<CR>
-    nnoremap <leader>zt :CtrlPTag<CR>
-    nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
+   nnoremap <leader>fo :call FormatCpp()<CR><CR>
+   nnoremap <leader>zf :CtrlPMixed<CR>
+   nnoremap <leader>zl :CtrlPLine<CR>
+   nnoremap <leader>zb :CtrlPBuffer<CR>
+   nnoremap <leader>zt :CtrlPTag<CR>
+   nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 
-    "FSwitch definitions and mappings
-    augroup mycppfiles
-    au!
-    "creating .cpp files if it does not exist,
-    "and looking for .cc and .c fle if .cpp does not exist
-    au BufEnter *.h let b:fswitchlocs  = 'reg:/include/static'
-    au BufEnter *.hpp let b:fswitchlocs  = 'reg:/include/static'
-    au BufEnter *.cpp let b:fswitchlocs  = 'reg:/static/include'
-    au BufEnter *.hpp let b:fswitchdst  = 'cpp,cc,C'
-    au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
-    au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
-    augroup END
+   "FSwitch definitions and mappings
+   augroup mycppfiles
+   au!
+   "creating .cpp files if it does not exist,
+   "and looking for .cc and .c fle if .cpp does not exist
+   au BufEnter *.h let b:fswitchlocs  = 'reg:/include/static'
+   au BufEnter *.hpp let b:fswitchlocs  = 'reg:/include/static'
+   au BufEnter *.cpp let b:fswitchlocs  = 'reg:/static/include'
+   au BufEnter *.hpp let b:fswitchdst  = 'cpp,cc,C'
+   au BufEnter *.h let b:fswitchdst  = 'cpp,cc,C'
+   au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
+   augroup END
 
-    "Switch to the file and load it into the current window 
-    nmap <silent> <Leader>of :FSHere<cr>
-    "Switch to the file and load it into the window on the right 
-    nmap <silent> <Leader>ol :FSRight<cr>
-    "Switch to the file and load it into a new window split on the right 
-    nmap <silent> <Leader>oL :FSSplitRight<cr>
-    "Switch to the file and load it into the window on the left 
-    nmap <silent> <Leader>oh :FSLeft<cr>
-    "Switch to the file and load it into a new window split on the left 
-    nmap <silent> <Leader>oH :FSSplitLeft<cr>
+   "Switch to the file and load it into the current window 
+   nmap <silent> <Leader>of :FSHere<cr>
+   "Switch to the file and load it into the window on the right 
+   nmap <silent> <Leader>ol :FSRight<cr>
+   "Switch to the file and load it into a new window split on the right 
+   nmap <silent> <Leader>oL :FSSplitRight<cr>
+   "Switch to the file and load it into the window on the left 
+   nmap <silent> <Leader>oh :FSLeft<cr>
+   "Switch to the file and load it into a new window split on the left 
+   nmap <silent> <Leader>oH :FSSplitLeft<cr>
 
-    "CtrlP settings 
-    let g:ctrlp_working_path_mode = 'o'
-    let g:ctrlp_by_filename=1
-    let g:ctrlp_match_window = 'top,order:btt,min:1,max:20'
-    let g:ctrlp_map = '<c-p>'
-    let g:ctrlp_cmd = 'CtrlP'
-    "let g:ctrlp_cmd = 'CtrlPMixed'
-    let g:ctrlp_user_command = 'ag %s -i --ignore "*.o" -l --nocolor -g ""'
-    let g:ctrlp_use_caching=0
-    let g:ctrlp_clear_cache_on_exit = 1
-    let g:ctrlp_custom_ignore = {
-        \ 'file': '\v\.(o|so|dll)$',
-        \ }
-    let g:ctrlp_max_files = 0
-    let g:ctrlp_lazy_update = 100
+   "CtrlP settings 
+   let g:ctrlp_working_path_mode = 'o'
+   let g:ctrlp_by_filename=1
+   let g:ctrlp_match_window = 'top,order:btt,min:1,max:20'
+   let g:ctrlp_map = '<c-p>'
+   let g:ctrlp_cmd = 'CtrlP'
+   "let g:ctrlp_cmd = 'CtrlPMixed'
+   let g:ctrlp_user_command = 'ag %s -i --ignore "*.o" -l --nocolor -g ""'
+   let g:ctrlp_use_caching=0
+   let g:ctrlp_clear_cache_on_exit = 1
+   let g:ctrlp_custom_ignore = {
+      \ 'file': '\v\.(o|so|dll)$',
+      \ }
+   let g:ctrlp_max_files = 0
+   let g:ctrlp_lazy_update = 100
 
-    let g:ycm_confirm_extra_conf = 0
-    let g:ycm_use_ultisnips_completer = 1
+   let g:ycm_confirm_extra_conf = 0
+   let g:ycm_use_ultisnips_completer = 1
 
-    let g:UltiSnipsExpandTrigger="<c-k>"
-    "let g:UltiSnipsJumpForwardTrigger="<c-b>"
-    "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+   "let g:UltiSnipsExpandTrigger="<c-k>"
+   let g:UltiSnipsJumpForwardTrigger="<c-j>"
+   let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+   let g:UltiSnipsExpandTrigger="<c-tab>"
+   let g:UltiSnipsListSnippets="<c-l>"
 
-    " If you want :UltiSnipsEdit to split your window.
-    let g:UltiSnipsEditSplit="vertical"
+   " If you want :UltiSnipsEdit to split your window.
+   let g:UltiSnipsEditSplit="vertical"
 
-    let g:LustyJugglerSuppressRubyWarning = 1
+   let g:LustyJugglerSuppressRubyWarning = 1
 endif
 
 
@@ -322,67 +320,24 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 "highlight trailing white space at the end of the line
 match Todo /\s\+$/
 
-function! FormatCpp()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    "removing white space on the end of the lines
-    silent! %s/\([(){};]\)\s\+$/\1/
-    silent! %s/\(\S\)\s\+$/\1/
-
-    "removing whitespace  smth     , -> smth,
-    "(  smth -> (smth
-    "smth   ) -> smt)
-    silent! %s/\s\+\([),]\)/\1/
-    silent! %s/\([(]\)\s\+/\1/
-
-    "removing whitespace  ,smth -> , smth
-    silent! %s/,\(\w\)/, \1/
-
-    "convert something==something -> something == something
-    silent! %s/\(\S\)\([=!>+<]\{1\}=\)/\1 \2/
-    silent! %s/\([=!>+<]\{1\}=\)\(\S\)/\1 \2/
-    silent! %s/\(\S\)\(<<\)/\1 \2/
-    silent! %s/\(<<\)\(\S\)/\1 \2/
-
-    "removing whitspace from ==
-    silent! %s/\s\{2,}\([=!>+<]=\)/ \1/
-    silent! %s/\([=!>+<]=\)\s\{2,}/\1 /
-
-    "converting  smth     = -> smth =
-    silent! %s/\s\{2,\}\([=,<>/]\)/ \1/
-    silent! %s/\([=,<>/]\)\s\{2,\}/\1 /
-
-
-    "chainging if ( to if(
-    silent! %s/\([a-z]\)\s\+(/\1(/
-    silent! %s/\([a-z]\)\s\+)/\1)/
-
-    "formatting
-    silent! normal ggVG=
-
-    silent! :w
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfunction
-
 let g:diffed_buffers=[]
 function! DiffText(a, b, diffed_buffers)
-    enew
-    setlocal buftype=nowrite
-    call add(a:diffed_buffers, bufnr('%'))
-    call setline(1, split(a:a, "\n"))
-    diffthis
-    vnew
-    setlocal buftype=nowrite
-    call add(a:diffed_buffers, bufnr('%'))
-    call setline(1, split(a:b, "\n"))
-    diffthis
+   enew
+   setlocal buftype=nowrite
+   call add(a:diffed_buffers, bufnr('%'))
+   call setline(1, split(a:a, "\n"))
+   diffthis
+   vnew
+   setlocal buftype=nowrite
+   call add(a:diffed_buffers, bufnr('%'))
+   call setline(1, split(a:b, "\n"))
+   diffthis
 endfunction
 
 function! WipeOutDiffs(diffed_buffers)
-    for buffer in a:diffed_buffers
-    execute 'bwipeout! '.buffer
-    endfor
+   for buffer in a:diffed_buffers
+   execute 'bwipeout! '.buffer
+   endfor
 endfunction
 
 nnoremap <special> <leader>dd :call DiffText(@a, @b, g:diffed_buffers)<CR>
