@@ -106,6 +106,8 @@ export FZF_DEFAULT_OPTS="--sort 20000"
 EDITOR=/usr/local/bin/gvim
 export EDITOR=/usr/local/bin/gvim
 
+eval "$(grunt --completion=bash)"
+
 #TODO
 #1.przejscie do katalogu newMT
 #2. budowanie knife

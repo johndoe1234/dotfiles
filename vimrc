@@ -55,6 +55,7 @@ if 0 == isGUIOn
     Bundle 'scrooloose/syntastic'
     Bundle 'jaxbot/browserlink.vim'
     Bundle 'pangloss/vim-javascript'
+    Bundle 'mhinz/vim-signify'
 endif
 
     ""Bundle 'Lokaltog/vim-easymotion'
@@ -83,8 +84,9 @@ let g:tern_show_signature_in_pum=1
 if isOsLinux == runningOnLinux
     Bundle 'SirVer/ultisnips'
     Bundle 'tpope/vim-dispatch'
-    Bundle 'jrosiek/vim-mark'
-    colorscheme molokai
+    "Bundle 'jrosiek/vim-mark'
+    "colorscheme molokai
+    colorscheme mrkn256
     set rtp+=~/.fzf
 endif
 
@@ -185,8 +187,6 @@ highlight StatusLine ctermfg=blue ctermbg=yellow
 "MAPPINGS
 command! W w
 command! Wq wq
-"clearing search results
-"nnoremap <leader>/ :noh<cr>
 "Disable Ex mode
 map Q <Nop>
 "Disable K looking stuff up
@@ -232,6 +232,12 @@ nnoremap <leader>w <C-w>v<C-w>l
 "copying to windows copy/paste buffer
 nnoremap <leader>yw "*yaw
 nnoremap <leader>yy "*yyy
+
+"searching with ag
+nnoremap <leader>a :Ag <C-r><C-w><CR>
+nnoremap <leader>A :Ag <C-r>+<CR>
+nnoremap <leader>/ /<C-r>+<CR>
+nnoremap <leader>f /<C-r><C-w><CR>
 
 "moving between windows
 nnoremap <C-h> <C-w>h
