@@ -1,0 +1,4 @@
+! my customisations
+XTerm*faceName: monof56
+XTerm*faceSize: 10
+XTerm*Maximized: true

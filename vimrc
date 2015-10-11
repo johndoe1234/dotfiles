@@ -78,7 +78,26 @@ endif
 ""let jshint2_close = 0
 let g:tern_show_argument_hints="on_hold"
 let g:tern_show_signature_in_pum=1
+"let g:tern_map_keys=1
 
+"Documentation under cursor
+nmap <Leader>td :TernDoc <CR>
+"Browse documentation
+nmap <Leader>tb :TernDocBrowse <CR>
+"Type hints
+nmap <Leader>tt :TernType <CR>
+"Jump to definition (yes, 'td' is duplicated)
+nmap <Leader>td :TernDef <CR>
+"Jump to definition inside preview
+nmap <Leader>tpd :TernDefPreview <CR>
+"Definition in new split
+nmap <Leader>tsd :TernDefSplit <CR>
+"Definition in new tab
+nmap <Leader>ttd :TernDefTab <CR>
+"All references under cursor
+nmap <Leader>tr :TernRefs <CR>
+"Rename variable
+nmap <Leader>tR :TernRename <CR>
 
 
 if isOsLinux == runningOnLinux
@@ -90,7 +109,7 @@ if isOsLinux == runningOnLinux
     set rtp+=~/.fzf
 endif
 
-source /home/koziowsk/dotfiles/vim_scripts/log_grepping.vim
+"source /home/koziowsk/dotfiles/im_scripts/log_grepping.vim
 
 filetype plugin indent on     " required!
 
