@@ -70,7 +70,7 @@ endif
     ""JavaScript plugins
     ""Bundle 'wookiehangover/jshint.vim'
     ""Bundle 'Shutnik/jshint2.vim'
-    ""Bundle 'vim-scripts/highlight.vim'
+    Bundle 'vim-scripts/highlight.vim'
     ""colorscheme CodeFactoryv3
 ""JavaScirpt variables
 ""let jshint2_read = 1
@@ -103,7 +103,8 @@ nmap <Leader>tR :TernRename <CR>
 if isOsLinux == runningOnLinux
     Bundle 'SirVer/ultisnips'
     Bundle 'tpope/vim-dispatch'
-    "Bundle 'jrosiek/vim-mark'
+    Bundle 'tpope/vim-fugitive'
+    Bundle 'jrosiek/vim-mark'
     "colorscheme molokai
     colorscheme mrkn256
     set rtp+=~/.fzf
@@ -123,7 +124,7 @@ endif
 set ic
 set is
 set undodir=~/.vimundo/
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 set autowrite       " Automatically save before commands like :next and :make
 set autoread
 set tabstop=4
@@ -141,6 +142,8 @@ set wildmode=list:longest,full
 set visualbell
 "set cursorline
 set ttyfast
+set lazyredraw
+set nocursorcolumn
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
@@ -162,7 +165,7 @@ set smartcase       " Do smart case matching
 set incsearch       " Incremental search
 set gdefault        " automatic adding g in regexp substisute :%s/something/else/g
 set showcmd     " Show (partial) command in status line.
-set hlsearch 
+set hlsearch
 set wrap
 set textwidth=79
 set formatoptions=qrn1
@@ -174,13 +177,16 @@ set sidescrolloff=8
 set history=500
 "configure tags - add additional tags here or comment out not-used ones
 set foldlevel=99
-set foldmethod=syntax
+set foldmethod=indent
+set synmaxcol=120
+set cursorline
 set guifont=Lucida_Console:h8:cANSI
 set guioptions-=m
 set guioptions-=l
 if 0 == isGUIOn
 set guioptions-=r
 endif
+set guioptions+=p
 set guioptions-=T
 set conceallevel=2
 set concealcursor=vin
@@ -198,10 +204,6 @@ if &diff
 endif
 
 highlight StatusLine ctermfg=blue ctermbg=yellow
-
-
-
-
 
 "MAPPINGS
 command! W w
@@ -255,7 +257,7 @@ nnoremap <leader>yy "*yyy
 "searching with ag
 nnoremap <leader>a :Ag <C-r><C-w><CR>
 nnoremap <leader>A :Ag <C-r>+<CR>
-nnoremap <leader>/ /<C-r>+<CR>
+"nnoremap <leader>/ /<C-r>+<CR>
 nnoremap <leader>f /<C-r><C-w><CR>
 
 "moving between windows
@@ -272,6 +274,7 @@ nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
 nnoremap <Space> zA
 vnoremap <Space> zA
 "
+command! J :%!python -mjson.tool
 
 if 0 == isGUIOn
    nnoremap <leader>fo :call FormatCpp()<CR><CR>
@@ -294,18 +297,18 @@ if 0 == isGUIOn
    au BufEnter *.cpp let b:fswitchdst  = 'h,hpp'
    augroup END
 
-   "Switch to the file and load it into the current window 
+   "Switch to the file and load it into the current window
    nmap <silent> <Leader>of :FSHere<cr>
-   "Switch to the file and load it into the window on the right 
+   "Switch to the file and load it into the window on the right
    nmap <silent> <Leader>ol :FSRight<cr>
-   "Switch to the file and load it into a new window split on the right 
+   "Switch to the file and load it into a new window split on the right
    nmap <silent> <Leader>oL :FSSplitRight<cr>
-   "Switch to the file and load it into the window on the left 
+   "Switch to the file and load it into the window on the left
    nmap <silent> <Leader>oh :FSLeft<cr>
-   "Switch to the file and load it into a new window split on the left 
+   "Switch to the file and load it into a new window split on the left
    nmap <silent> <Leader>oH :FSSplitLeft<cr>
 
-   "CtrlP settings 
+   "CtrlP settings
    let g:ctrlp_working_path_mode = 'o'
    let g:ctrlp_by_filename=1
    let g:ctrlp_match_window = 'top,order:btt,min:1,max:20'
@@ -334,6 +337,8 @@ if 0 == isGUIOn
    let g:UltiSnipsEditSplit="vertical"
 
    let g:LustyJugglerSuppressRubyWarning = 1
+   let g:ag_prg="ag --vimgrep --smart-case --ignore=*.json --ignore-dir=testutils --ignore-dir=test"
+   let g:ag_highlight=1
 endif
 
 
