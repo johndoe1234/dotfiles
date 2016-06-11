@@ -337,6 +337,8 @@ if 0 == isGUIOn
 endif
 
 
+let g:ycm_add_preview_to_completeopt = 1
+
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
