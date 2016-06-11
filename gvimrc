@@ -7,7 +7,9 @@ set is
 set ruler
 set showcmd
 set incsearch
-
+set guioptions+=p
+"copy with mous selection
+"noremap <LeftRelease> "+y<LeftRelease>
 
 set guifont=Monospace
 let g:MyTag='kozlowski'

@@ -111,6 +111,7 @@ function! MySearch2()
     execute '!ag -m 100000000 --no-numbers --stats -i ''' . escape(@*, '()[\/]') . ''' % > search_out'
     tabnew
     r search_out
+    execute 'silent! %s/\r//'
 
     let w:filename='search_results' . g:FileCounter
     let g:FileCounter= g:FileCounter+1
