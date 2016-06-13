@@ -177,3 +177,4 @@ MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
 
 export PATH=${HOME}/bin:$PATH
 
+source ~/.bash_secret
