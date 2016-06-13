@@ -327,11 +327,9 @@ if 0 == isGUIOn
    let g:ycm_confirm_extra_conf = 0
    let g:ycm_use_ultisnips_completer = 1
 
-   "let g:UltiSnipsExpandTrigger="<c-k>"
-   let g:UltiSnipsJumpForwardTrigger="<c-j>"
-   let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-   let g:UltiSnipsExpandTrigger="<c-tab>"
-   let g:UltiSnipsListSnippets="<c-l>"
+   let g:UltiSnipsExpandTrigger="<c-e>"
+   let g:UltiSnipsJumpForwardTrigger="<c-b>"
+   let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
    " If you want :UltiSnipsEdit to split your window.
    let g:UltiSnipsEditSplit="vertical"
