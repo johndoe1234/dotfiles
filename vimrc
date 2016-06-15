@@ -56,6 +56,10 @@ if 0 == isGUIOn
     Bundle 'jaxbot/browserlink.vim'
     Bundle 'pangloss/vim-javascript'
     Bundle 'mhinz/vim-signify'
+
+    Bundle 'jeaye/color_coded'
+    Bundle 'rdnetto/YCM-Generator'
+
 endif
 
     ""Bundle 'Lokaltog/vim-easymotion'
@@ -315,7 +319,7 @@ if 0 == isGUIOn
    let g:ctrlp_map = '<c-p>'
    let g:ctrlp_cmd = 'CtrlP'
    "let g:ctrlp_cmd = 'CtrlPMixed'
-   let g:ctrlp_user_command = 'ag %s -i --ignore "*.o" -l --nocolor -g ""'
+   let g:ctrlp_user_command = 'ag %s --ignore=*.cpp.o -l --nocolor -g ""'
    let g:ctrlp_use_caching=0
    let g:ctrlp_clear_cache_on_exit = 1
    let g:ctrlp_custom_ignore = {
@@ -335,8 +339,10 @@ if 0 == isGUIOn
    let g:UltiSnipsEditSplit="vertical"
 
    let g:LustyJugglerSuppressRubyWarning = 1
-   let g:ag_prg="ag --vimgrep --smart-case --ignore=*.json --ignore-dir=testutils --ignore-dir=test"
+   let g:ag_prg="ag --vimgrep --smart-case --ignore=*.json --ignore=*.o--ignore-dir=testutils --ignore-dir=test"
    let g:ag_highlight=1
+
+
 endif
 
 
