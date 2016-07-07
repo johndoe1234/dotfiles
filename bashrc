@@ -102,6 +102,7 @@ source ~/.fzf.bash
 
 export BOOST_LIBRARYDIR=/usr/local/lib/
 export BOOST_INCLUDEDIR=/usr/include
+export BOOST_ROOT=/home/koziowsk/install/boost_1_61_0
 export FZF_DEFAULT_OPTS="--sort 20000"
 EDITOR=/usr/local/bin/gvim
 export EDITOR=/usr/local/bin/gvim

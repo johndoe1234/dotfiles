@@ -74,7 +74,7 @@ endif
     ""JavaScript plugins
     ""Bundle 'wookiehangover/jshint.vim'
     ""Bundle 'Shutnik/jshint2.vim'
-    Bundle 'vim-scripts/highlight.vim'
+    "Bundle 'vim-scripts/highlight.vim'
     ""colorscheme CodeFactoryv3
 ""JavaScirpt variables
 ""let jshint2_read = 1
