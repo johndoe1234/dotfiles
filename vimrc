@@ -24,7 +24,7 @@ if isOsWindows == runningOnWindows
 endif
 
 if isOsLinux == runningOnLinux
-    set rtp+=~/.vim/bundle/vundle/
+    set rtp+=~/.vim/bundle/Vundle.vim/
     source ~/dotfiles/vimrc_linux
 endif
 
@@ -57,7 +57,7 @@ if 0 == isGUIOn
     Bundle 'pangloss/vim-javascript'
     Bundle 'mhinz/vim-signify'
 
-    Bundle 'jeaye/color_coded'
+    "Bundle 'jeaye/color_coded'
     Bundle 'rdnetto/YCM-Generator'
 
 endif
